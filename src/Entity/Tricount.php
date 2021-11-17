@@ -39,9 +39,15 @@ class Tricount
      */
     private $participants;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Depense::class, mappedBy="tricount")
+     */
+    private $depenses;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
+        $this->depenses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -109,6 +115,36 @@ class Tricount
             // set the owning side to null (unless already changed)
             if ($participant->getTricountId() === $this) {
                 $participant->setTricountId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Depense[]
+     */
+    public function getDepenses(): Collection
+    {
+        return $this->depenses;
+    }
+
+    public function addDepense(Depense $depense): self
+    {
+        if (!$this->depenses->contains($depense)) {
+            $this->depenses[] = $depense;
+            $depense->setTricount($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDepense(Depense $depense): self
+    {
+        if ($this->depenses->removeElement($depense)) {
+            // set the owning side to null (unless already changed)
+            if ($depense->getTricount() === $this) {
+                $depense->setTricount(null);
             }
         }
 

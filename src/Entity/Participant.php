@@ -28,6 +28,11 @@ class Participant
      */
     private $name;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Depense::class, mappedBy="pay_master", cascade={"persist", "remove"})
+     */
+    private $pay_master_part;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +58,23 @@ class Participant
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getPayMasterPart(): ?Depense
+    {
+        return $this->pay_master_part;
+    }
+
+    public function setPayMasterPart(Depense $pay_master_part): self
+    {
+        // set the owning side of the relation if necessary
+        if ($pay_master_part->getPayMaster() !== $this) {
+            $pay_master_part->setPayMaster($this);
+        }
+
+        $this->pay_master_part = $pay_master_part;
 
         return $this;
     }
