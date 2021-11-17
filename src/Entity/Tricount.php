@@ -103,7 +103,7 @@ class Tricount
     {
         if (!$this->participants->contains($participant)) {
             $this->participants[] = $participant;
-            $participant->setTricountId($this);
+            $participant->setPersonInDebtId($this);
         }
 
         return $this;
@@ -113,8 +113,8 @@ class Tricount
     {
         if ($this->participants->removeElement($participant)) {
             // set the owning side to null (unless already changed)
-            if ($participant->getTricountId() === $this) {
-                $participant->setTricountId(null);
+            if ($participant->getPersonInDebtId() === $this) {
+                $participant->setPersonInDebtId(null);
             }
         }
 

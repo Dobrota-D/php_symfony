@@ -21,7 +21,7 @@ class Participant
      * @ORM\ManyToOne(targetEntity=Tricount::class, inversedBy="participants")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $tricount_id;
+    private $personindebt_id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -38,14 +38,14 @@ class Participant
         return $this->id;
     }
 
-    public function getTricountId(): ?Tricount
+    public function getPersonInDebtId(): ?Tricount
     {
-        return $this->tricount_id;
+        return $this->personindebt_id;
     }
 
-    public function setTricountId(?Tricount $tricount_id): self
+    public function setPersonInDebtId(?Tricount $personindebt_id): self
     {
-        $this->tricount_id = $tricount_id;
+        $this->personindebt_id = $personindebt_id;
 
         return $this;
     }
