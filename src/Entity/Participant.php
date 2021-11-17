@@ -32,14 +32,10 @@ class Participant
     private $pay_master_part;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Users::class, inversedBy="participants")
+     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="participants")
      */
     private $user;
 
-    public function __construct()
-    {
-        $this->user = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -75,27 +71,16 @@ class Participant
         return $this;
     }
 
-    /**
-     * @return Collection|Users[]
-     */
-    public function getUser(): Collection
+    public function getUser(): ?Users
     {
         return $this->user;
     }
 
-    public function addUser(Users $user): self
+    public function setUser(?Users $user): self
     {
-        if (!$this->user->contains($user)) {
-            $this->user[] = $user;
-        }
+        $this->user = $user;
 
         return $this;
     }
 
-    public function removeUser(Users $user): self
-    {
-        $this->user->removeElement($user);
-
-        return $this;
-    }
 }

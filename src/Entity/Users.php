@@ -40,7 +40,7 @@ class Users
     private $created_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Participant::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="user")
      */
     private $participants;
 
@@ -114,7 +114,7 @@ class Users
     {
         if (!$this->participants->contains($participant)) {
             $this->participants[] = $participant;
-            $participant->addUser($this);
+            $participant->setUser($this);
         }
 
         return $this;
@@ -123,9 +123,13 @@ class Users
     public function removeParticipant(Participant $participant): self
     {
         if ($this->participants->removeElement($participant)) {
-            $participant->removeUser($this);
+            // set the owning side to null (unless already changed)
+            if ($participant->getUser() === $this) {
+                $participant->setUser(null);
+            }
         }
 
         return $this;
     }
+
 }
