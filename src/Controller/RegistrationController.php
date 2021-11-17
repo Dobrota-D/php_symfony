@@ -48,11 +48,7 @@ class RegistrationController extends AbstractController
     public function signIn(): Response
     {
         return $this->render('connect/index.html.twig', [
-            'controller_name' => 'S\'inscrire',
-            'redirectTo'=>[
-                'link'=>"connect",
-                'front'=>"Se connecter"
-            ],
+            'controller_name' => 'S\'inscrire'
         ]);
     }
 }
