@@ -14,7 +14,24 @@ class ConnectController extends AbstractController
     public function index(): Response
     {
         return $this->render('connect/index.html.twig', [
-            'controller_name' => 'ConnectController',
+            'controller_name' => 'Se connecter',
+            'redirectTo'=>[
+                'link'=>'sign',
+                'front'=>'S\'inscrire'
+            ],
+        ]);
+    }
+    /**
+     * @Route ("/signin", name="sign")
+     */
+    public function signIn(): Response
+    {
+        return $this->render('connect/index.html.twig', [
+            'controller_name' => 'S\'inscrire',
+            'redirectTo'=>[
+                'link'=>"connect",
+                'front'=>"Se connecter"
+            ],
         ]);
     }
 }
