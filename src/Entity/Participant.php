@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ParticipantRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,17 +23,23 @@ class Participant
      * @ORM\ManyToOne(targetEntity=Tricount::class, inversedBy="participants")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $personindebt_id;
+    private $tricount_id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
 
     /**
      * @ORM\OneToOne(targetEntity=Depense::class, mappedBy="pay_master", cascade={"persist", "remove"})
      */
     private $pay_master_part;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Users::class, inversedBy="participants")
+     */
+    private $user;
+
+    public function __construct()
+    {
+        $this->user = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -50,18 +58,6 @@ class Participant
         return $this;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     public function getPayMasterPart(): ?Depense
     {
         return $this->pay_master_part;
@@ -75,6 +71,30 @@ class Participant
         }
 
         $this->pay_master_part = $pay_master_part;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Users[]
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(Users $user): self
+    {
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUser(Users $user): self
+    {
+        $this->user->removeElement($user);
 
         return $this;
     }
