@@ -16,7 +16,6 @@ class TricountType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('participants', TextType::class)
             ->add('content')
             ->add('devise')
         ;

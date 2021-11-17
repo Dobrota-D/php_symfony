@@ -10,9 +10,17 @@
 
 <div class="example-wrapper">
     <h1>Tricount ✅</h1>
-    {{ form_start(Tricount) }}
-        {{ form_widget(Tricount) }}
-            <button class="btn">{{ button_label|default('save') }}</button>
-    {{ form_end(Tricount) }}
+    {{ form_start(form) }}
+        <div>
+            {{ form_row(form.title) }}
+        </div>
+        <div>
+            {{ form_row(form.content) }}
+        </div>
+        <div>
+            {{ form_row(form.devise) }}
+        </div>
+        <button class="btn">{{ button_label|default('save') }}</button>
+    {{ form_end(form) }}
 </div>
 {% endblock %}
