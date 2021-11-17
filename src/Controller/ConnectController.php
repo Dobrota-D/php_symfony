@@ -11,6 +11,7 @@ class ConnectController extends AbstractController
     /**
      * @Route("/login", name="connect")
      */
+    /*
     public function index(): Response
     {
         return $this->render('connect/index.html.twig', [
@@ -20,10 +21,11 @@ class ConnectController extends AbstractController
                 'front'=>'S\'inscrire'
             ],
         ]);
-    }
+    }*/
     /**
      * @Route ("/signin", name="sign")
      */
+    /*
     public function signIn(): Response
     {
         return $this->render('connect/index.html.twig', [
@@ -33,5 +35,5 @@ class ConnectController extends AbstractController
                 'front'=>"Se connecter"
             ],
         ]);
-    }
+    }*/
 }
