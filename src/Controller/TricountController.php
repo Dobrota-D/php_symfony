@@ -12,17 +12,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class TricountController extends AbstractController
 {
     /**
-     * @Route("", name="tricount")
+     * @Route("/", name="tricount")
      */
     public function index(Request $request): Response
     {
-        $Tricount = new Tricount();
-        $form = $this->createForm(TricountType::class, $Tricount);
+        $tricount = new Tricount();
+        $form = $this->createForm(TricountType::class, $tricount);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($Tricount);
+            $entityManager->persist($tricount);
             $entityManager->flush();
 
             return $this->redirection("add_participant", [], Response::HTTP_SEE_OTHER);
