@@ -55,10 +55,16 @@ class Tricount
      */
     private $depenses;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Token::class, mappedBy="tricount_id")
+     */
+    private $tokens;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
         $this->depenses = new ArrayCollection();
+        $this->tokens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,6 +162,36 @@ class Tricount
             // set the owning side to null (unless already changed)
             if ($depense->getTricount() === $this) {
                 $depense->setTricount(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Token[]
+     */
+    public function getTokens(): Collection
+    {
+        return $this->tokens;
+    }
+
+    public function addToken(Token $token): self
+    {
+        if (!$this->tokens->contains($token)) {
+            $this->tokens[] = $token;
+            $token->setTricountId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeToken(Token $token): self
+    {
+        if ($this->tokens->removeElement($token)) {
+            // set the owning side to null (unless already changed)
+            if ($token->getTricountId() === $this) {
+                $token->setTricountId(null);
             }
         }
 

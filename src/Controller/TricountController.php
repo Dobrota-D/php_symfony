@@ -6,6 +6,7 @@ use App\Form\TricountType;
 use App\Entity\Tricount;
 use App\Repository\ParticipantRepository;
 use App\Service\TricountService;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,13 +39,14 @@ class TricountController extends AbstractController
 
     /**
      * @Route("/tricount", name="tricount")
+     * @throws Exception
      */
     public function index(Request $request): Response
     {
 
-        # We check if the User if authenticated
+        # We check if the User is authenticated
         if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            # redirect to the User page if not
+            # redirect to the login page if user is not authenticated
             return $this->redirectToRoute('app_register');
         }
 

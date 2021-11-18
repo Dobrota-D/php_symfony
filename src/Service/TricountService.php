@@ -4,30 +4,40 @@ namespace App\Service;
 
 use App\Entity\Participant;
 use App\Entity\Tricount;
-use App\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class TricountService
 {
 
-
+    /**
+     * @var EntityManagerInterface
+     */
     private EntityManagerInterface $entityManager;
+
+    /**
+     * @var TokenService
+     */
+    private TokenService $tokenService;
 
     /**
      * Create a new TricountService instance.
      *
      * TricountService constructor.
      */
-    public function __construct(EntityManagerInterface $entityManager) {
+    public function __construct(EntityManagerInterface $entityManager, TokenService $tokenService)
+    {
         $this->entityManager = $entityManager;
+        $this->tokenService = $tokenService;
     }
 
     /**
      * Create a new Tricount
      *
      * @param Tricount $tricount
+     * @param UserInterface $user_id
      * @return void
+     * @throws \Exception
      */
     public function createTricount(Tricount $tricount, UserInterface $user_id): void
     {
@@ -36,6 +46,8 @@ class TricountService
         $this->entityManager->persist($tricount);
         $this->entityManager->flush();
 
+        # add created Tricount ID to Token
+        $this->tokenService->createTricountToken($tricount);
 
         # Manage Participants
         $participant = new Participant();
