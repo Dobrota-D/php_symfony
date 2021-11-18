@@ -2,35 +2,25 @@
 
 namespace App\Service;
 
+use App\Entity\Participant;
 use App\Entity\Tricount;
+use App\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectManager;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class TricountService
 {
 
-    /**
-     * ALL ALLOWED DEVISES
-     */
-    private const DEVISES = ['EUR', 'USD', 'CHF'];
 
     private EntityManagerInterface $entityManager;
-
-    private RouterInterface $router;
 
     /**
      * Create a new TricountService instance.
      *
      * TricountService constructor.
      */
-    public function __construct(EntityManagerInterface $entityManager, RouterInterface $router) {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
-        $this->router = $router;
     }
 
     /**
@@ -39,10 +29,25 @@ class TricountService
      * @param Tricount $tricount
      * @return void
      */
-    public function createTricount(Tricount $tricount): void
+    public function createTricount(Tricount $tricount, UserInterface $user_id): void
     {
+        # Manage tricount
         $this->entityManager->getRepository(Tricount::class);
         $this->entityManager->persist($tricount);
+        $this->entityManager->flush();
+
+
+        # Manage Participants
+        $participant = new Participant();
+
+        # Set the authenticated user ID
+        $participant->setUser($user_id);
+
+        # Set the created Tricount ID
+        $participant->setTricountId($tricount);
+
+        $this->entityManager->getRepository(Participant::class);
+        $this->entityManager->persist($participant);
         $this->entityManager->flush();
     }
 }

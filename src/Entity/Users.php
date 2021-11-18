@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -46,6 +47,16 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $create_at;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="user")
+     */
+    private $participants;
+
+    public function __construct()
+    {
+        $this->participants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -156,6 +167,35 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreateAt(?\DateTimeImmutable $create_at): self
     {
         $this->create_at = $create_at;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getParticipants(): ArrayCollection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(Participant $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+            $participant->setUser($this);
+        }
+
+        return $this;
+    }
+    public function removeParticipant(Participant $participant): self
+    {
+        if ($this->participants->removeElement($participant)) {
+            // set the owning side to null (unless already changed)
+            if ($participant->getUser() === $this) {
+                $participant->setUser(null);
+            }
+        }
 
         return $this;
     }

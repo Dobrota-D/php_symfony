@@ -83,4 +83,16 @@ class Participant
         return $this;
     }
 
+    public function getTricountId(): ?Users
+    {
+        return $this->tricount_id;
+    }
+
+    public function setTricountId(?Tricount $tricount_id): self
+    {
+        $this->tricount_id = $tricount_id;
+
+        return $this;
+    }
+
 }
