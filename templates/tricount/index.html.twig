@@ -5,25 +5,21 @@
 {% block body %}
 <div class="example-wrapper">
     <h1>Tricount ✅</h1>
-<<<<<<< HEAD
-    {{ form_start(form) }}
+
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
         <div>
             {{ form_row(form.title) }}
+             {# {{ form_errors(form.title) }} #}
         </div>
         <div>
             {{ form_row(form.content) }}
         </div>
         <div>
             {{ form_row(form.devise) }}
+            <p>(EUR, USD, CHF )</p>
         </div>
         <button class="btn">{{ button_label|default('save') }}</button>
     {{ form_end(form) }}
-=======
 
-    {{ form_start(Tricount) }}
-        {{ form_widget(Tricount) }}
-            <button class="btn">{{ button_label|default('save') }}</button>
-    {{ form_end(Tricount) }}
->>>>>>> fe519c7403c271658d2ad4ca22c56195c5633445
 </div>
 {% endblock %}
