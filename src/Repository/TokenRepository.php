@@ -19,6 +19,26 @@ class TokenRepository extends ServiceEntityRepository
         parent::__construct($registry, Token::class);
     }
 
+    /**
+     * @param String $token
+     * @return array
+     */
+    public function findByToken(String $token): array
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.token = :token')
+            ->setParameter('token', $token)
+            ->getQuery()->getResult();
+    }
+
+    public function findTokenRelatedTricount(String $token)
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.token = :token')
+            ->setParameter(':token', $token)
+            ->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Token[] Returns an array of Token objects
     //  */

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -11,8 +12,13 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="default")
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        return $this->render('base.html.twig');
+        $invitation_link = $request->server->get('SERVER_NAME') . $this->generateUrl('tricount_add_participant', array('token' => 'HVCG3Q80mnS2hc8thqsDPMBLUpcmir2JbvaZL12Vwqs'));
+
+        dump($request->server);
+        return $this->render('home.html.twig', [
+            'invitation_link' => $invitation_link
+        ]);
     }
 }

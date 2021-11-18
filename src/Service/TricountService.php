@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Participant;
 use App\Entity\Tricount;
+use App\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -50,6 +51,18 @@ class TricountService
         $this->tokenService->createTricountToken($tricount);
 
         # Manage Participants
+        $this->createParticipantWithTricount($user_id, $tricount);
+
+    }
+
+    /**
+     *
+     * @param UserInterface $user_id
+     * @param Tricount $tricount
+     * @return void
+     */
+    public function createParticipantWithTricount(UserInterface $user_id, Tricount $tricount): void
+    {
         $participant = new Participant();
 
         # Set the authenticated user ID
@@ -62,4 +75,25 @@ class TricountService
         $this->entityManager->persist($participant);
         $this->entityManager->flush();
     }
+
+    /**
+     * Create a simple Guest User
+     *
+     * @param String $name
+     * @return Users
+     */
+    public function createSimpleUserGuest(String $name): Users
+    {
+        $this->entityManager->getRepository(Users::class);
+
+        $user = new Users();
+
+        $user->setNom($name);
+        $user->setRoles((array)'ROLE_GUEST');
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+        return $user;
+    }
+
 }

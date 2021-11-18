@@ -21,6 +21,17 @@
         {% endblock %}
     </head>
     <body>
+        <nav class="navBar">
+            <div></div>
+            <div></div>
+            <div>- TriCount -</div>
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div>
+                <a href="{{ path("app_register") }}">Se Connecter</a>
+                <a href="{{ path("sign") }}">S'inscrire</a>
+            </div>
+            {% endif %}
+        </nav>
         <style>
             body{
                 margin: 0;
@@ -38,24 +49,8 @@
             }
             .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
         </style>
-        <nav class="navBar">
-            <div></div>
-            <div></div>
-            <div>- TriCount -</div>
-            <div>
-                <a href="{{ path("app_register") }}">Se Connecter</a>
-                <a href="{{ path("sign") }}">S'inscrire</a>
-            </div>
-        </nav>
+
         {% block body %}
-            {% if app.user %}
-                <div class="mb-3">
-                    Vous êtes connectez avec {{ app.user.username }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
-                </div>
-            {% else %}
-                <h1>Welcome to TriCount Wish !</h1>
-                <a href="{{ path("app_register") }}">Connect to your Account</a>
-            {% endif %}
         {% endblock %}
     </body>
 </html>

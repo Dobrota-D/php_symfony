@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            Vous êtes connectez avec {{ app.user.username }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
+            <p>Lien d'invitation du tricount : {{ invitation_link }}</p>
+        </div>
+    {% else %}
+        <h1>Welcome to TriCount Wish !</h1>
+        <a href="{{ path("app_register") }}">Connect to your Account</a>
+
+    {% endif %}
+{% endblock %}

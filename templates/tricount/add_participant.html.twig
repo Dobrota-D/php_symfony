@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+    <div>
+        {{ form_row(form.nom) }}
+        {# {{ form_errors(form.title) }} #}
+    </div>
+    <button class="btn" type="submit">Ajouter</button>
+    {{ form_end(form) }}
+
+{% endblock %}
