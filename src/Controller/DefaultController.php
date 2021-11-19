@@ -21,8 +21,10 @@ class DefaultController extends AbstractController
     public function index(): Response
     {
         $dataPayment = $this->dataPayment->paymentGraphicData();
+        $globalDebt = $this->dataPayment->paymentToRefund();
         return $this->render('base.html.twig', [
             "data"=>$dataPayment,
+            "debt"=>$globalDebt,
         ]);
     }
 }
