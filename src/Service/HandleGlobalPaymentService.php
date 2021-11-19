@@ -35,17 +35,21 @@ class HandleGlobalPaymentService
         $return = [];
         foreach ($this->globalPayments as $payment){
             if (isset($return[$payment["pay_master_id"]])){
-                $return[$payment["pay_master_id"]] += $payment["amount_total"];
+                $return[$payment["pay_master_id"]]["amount"] += $payment["amount_total"];
             }else{
-                $return[$payment["pay_master_id"]] = $payment["amount_total"];
+                $return[$payment["pay_master_id"]] = ["amount"=>$payment["amount_total"]];
             }
 
             foreach ($this->inDebt as $person){
                 if ($person["depense_id"] == $payment["id"] && $person["id_participant_id"] != $payment["pay_master_id"]){
-                    if (!isset($return[$person["id_participant_id"]])) $return[$person["id_participant_id"]] = 0;
-                    $return[$person["id_participant_id"]] -= $person["amount_personnal"];
+                    if (!isset($return[$person["id_participant_id"]])) $return[$person["id_participant_id"]] = ["amount"=>0];
+                    $return[$person["id_participant_id"]]["amount"] -= $person["amount_personnal"];
                 }
             }
+        }
+        foreach ($return as $key=>$value){
+            $return[$key]["isDebt"] = abs($value["amount"]) != $value["amount"];
+            $return[$key]["prop"] = abs($value["amount"]) *0.5;
         }
         return $return;
     }

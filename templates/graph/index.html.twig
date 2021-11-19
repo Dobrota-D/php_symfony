@@ -4,11 +4,6 @@
 
 {% block body %}
 <style>
-    body {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        padding: 20px;
-    }
-
     /* Bar Graph Horizontal */
     .bar-graph-horizontal {
         max-width: 380px;
@@ -37,7 +32,7 @@
         width: 0;
     }
 
-    .bar-graph-one .bar::after {
+    .bar-graph-one .bar > div::after {
         color: #fff;
         content: attr(data-percentage);
         font-weight: 700;
@@ -45,23 +40,15 @@
         right: 16px;
         top: 17px;
     }
-
-    .bar-graph-one .bar {
-            background-color: red;
-            
-            width: 69.6%;
-    }
-
-
 </style>
 
     <section class="bar-graph bar-graph-horizontal bar-graph-one">
 
     {% for key, value in data %}
 
-        <div class="bar" id="{{key}}" style="width:{{value}}%, background:{% if value < 0 %} 'red' {% else %} 'green' {% endif %}">
+        <div class="bar" id="{{key}}" style="width:{{value.prop}}%; background-color:{% if value.isDebt %} red {% else %} green {% endif %}">
             <span class="debt">{{key}}</span>
-            <div class="bar" data-percentage='{{value}}'></div>
+            <div data-percentage="{{value.amount}}"></div>
         </div>
 
     {% endfor %}
