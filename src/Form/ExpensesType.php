@@ -24,12 +24,7 @@ class ExpensesType extends AbstractType
                 "expanded" => true,
                 "multiple" => true,
             ])
-            ->add('tricount', EntityType::class, [
-                "class" => Tricount::class,
-                "choice_label" => "title",
-                "expanded" => true,
-                "multiple" => true,
-            ])
+            
 
         ;
     }
