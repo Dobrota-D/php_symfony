@@ -6,10 +6,16 @@
         <div>
             {% if app.user %}
                 Vous êtes connectez avec {{ app.user.username }}
-                <p>Lien d'invitation du tricount : {{ invitation_link }}</p>
+                <p>Lien d'invitation du TriCount : {{ invitation_link }}</p>
+                <button> 
+                    <a href="{{ path('graph') }}">Consulter mon dernier TriCount</a>
+                </button>
+                <button> 
+                    <a href="{{ path('tricount') }}">Créer un TriCount</a>
+                </button>
             {% else %}
-                <h1>Welcome to TriCount Wish !</h1>
-                <a href="{{ path("app_register") }}">Connect to your Account</a>
+                <h1>Bienvenue sur TriCount Wish !</h1>
+                <a href="{{ path("app_register") }}">Se connecter</a>
             {% endif %}
         </div>
     </div>

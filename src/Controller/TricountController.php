@@ -76,7 +76,7 @@ class TricountController extends AbstractController
             }
             $this->tricountService->createTricount($tricount, $user);
             # After submit redirect to the same page, so the form is reset
-            $this->redirect($request->getUri());
+            return $this->redirectToRoute('graph');
         }
         return $this->render('tricount/index.html.twig', [
             'form' => $form->createView(),
