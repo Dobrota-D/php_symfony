@@ -21,17 +21,6 @@
         {% endblock %}
     </head>
     <body>
-        <nav class="navBar">
-            <div></div>
-            <div></div>
-            <div>- TriCount -</div>
-            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-            <div>
-                <a href="{{ path("app_register") }}">Se Connecter</a>
-                <a href="{{ path("sign") }}">S'inscrire</a>
-            </div>
-            {% endif %}
-        </nav>
         <style>
             body{
                 margin: 0;
@@ -49,6 +38,16 @@
             }
             .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
         </style>
+        <nav class="navBar">
+            <div></div>
+            <div>- TriCount -</div>
+            <div>
+                {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a href="{{ path("app_register") }}">Se Connecter</a>
+                    <a href="{{ path("sign") }}">S'inscrire</a>
+                {% endif %}
+            </div>
+        </nav>
 
         {% block body %}
         {% endblock %}
