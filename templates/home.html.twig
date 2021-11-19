@@ -2,14 +2,15 @@
 
 {% block body %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            Vous êtes connectez avec {{ app.user.username }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
-            <p>Lien d'invitation du tricount : {{ invitation_link }}</p>
+    <div style="display:flex; justify-content:center;">
+        <div>
+            {% if app.user %}
+                Vous êtes connectez avec {{ app.user.username }}
+                <p>Lien d'invitation du tricount : {{ invitation_link }}</p>
+            {% else %}
+                <h1>Welcome to TriCount Wish !</h1>
+                <a href="{{ path("app_register") }}">Connect to your Account</a>
+            {% endif %}
         </div>
-    {% else %}
-        <h1>Welcome to TriCount Wish !</h1>
-        <a href="{{ path("app_register") }}">Connect to your Account</a>
-
-    {% endif %}
+    </div>
 {% endblock %}

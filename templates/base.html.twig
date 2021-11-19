@@ -33,8 +33,27 @@
                 display: flex;
                 justify-content: space-between;
             }
+            .navBar > *{
+                flex: 1 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
             .navBar a {
-                font-size: inherit;
+                padding:0 10px;
+                margin:0 10px;
+                font-size: 2.5vh;
+                color: white;
+                border-radius: 10px;
+            }
+            .navBar a:hover{
+                color: darkgreen;
+                background-color: white;
+                text-decoration: none;
+            }
+            .red:hover{
+                background-color: red !important;
+                color: white !important;
             }
             .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
         </style>
@@ -45,6 +64,8 @@
                 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                     <a href="{{ path("app_register") }}">Se Connecter</a>
                     <a href="{{ path("sign") }}">S'inscrire</a>
+                {% else %}
+                    <a class="red" href="{{ path('app_logout') }}">Déconnexion</a>
                 {% endif %}
             </div>
         </nav>
