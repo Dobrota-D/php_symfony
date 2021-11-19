@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="p-5">
+        <div class="grp_btn">
+            <button class="btn-1" type="submit">graphique</button>
+            <button class="btn-1" type="submit">depense</button>
+        </div>
+
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+
+    {{ form_widget(form) }}
+        <button class="btn" type="submit">Ajouter</button>
+    {{ form_end(form) }}
+    </div>
+    <style>
+        .grp_btn{
+            text-align: center;
+            padding-bottom: 1%;
+        }
+    </style>
+{% endblock %}

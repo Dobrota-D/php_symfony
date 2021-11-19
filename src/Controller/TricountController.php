@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Depense;
 use App\Entity\Participant;
 use App\Entity\Users;
+use App\Form\ExpensesType;
 use App\Form\RegistrationFormType;
 use App\Form\TricountType;
 use App\Entity\Tricount;
@@ -126,5 +128,34 @@ class TricountController extends AbstractController
         return $this->render('tricount/showParticipant.html.twig', [
             "participants"=>$triCount_participant
         ]);
+    }
+
+    /**
+     * @Route ("/tricount/{id}/add/expense", name="Depence")
+     */
+    public function addExpenses(Request $request): Response
+    {
+        $depenses = new Depense();
+
+        $form = $this->createForm(ExpensesType::class, $depenses);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if (!in_array($form->getData()->getDevise(), self::DEVISES)) {
+                return $this->redirectToRoute('tricount');
+            }
+            #$this->tricountService->createTricount($tricount, $user);
+            # After submit redirect to the same page, so the form is reset
+
+        }
+        return $this->render('tricount/add_depense.html.twig', [
+            'form' => $form->createView(),
+        ]);
+
+
+
+
+
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Depense;
 use App\Entity\Participant;
 use App\Entity\Tricount;
 use App\Entity\Users;
@@ -94,6 +95,17 @@ class TricountService
         $this->entityManager->persist($user);
         $this->entityManager->flush();
         return $user;
+    }
+
+    public function createDepense(Depense $depense): void {
+
+        $this->entityManager->getRepository(Depense::class);
+        $this->entityManager->persist($depense);
+        $this->entityManager->flush();
+
+
+
+
     }
 
 }
